@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Document</title>
+</head>
+<script>
+    document.getElementById("updateForm").style.display = "none";
+    function toggleupdateForm(){
+        var updateForm = document.getElementById("update.form");
+        if (updateForm.style.display == "none"){
+            updateForm.style.display == "block";
+        }
+        else{
+            updateForm.style.display ="none";
+        }
+    }
+</script>
+<body>
+    <div>
+        <form action="/search" method="POST">
+            <input type="text" name = "search" placeholder="search tasks">
+        </form>
+
+        <form action="/create" class="create" id="createform">
+            <input type="text" name="description" placeholder="task description">
+            <input type="date" name="date" placeholder="date">
+            <input type="text" name="category" placeholder="category">
+            <input type="submit">
+        </form>
+    </div>
+    <div class = "task-matrix">
+        {% for task in tasks %}
+            <div class="task-row">
+                <div class = "task-attribute">{{task.description}}</div>
+                <div class = "task-attribute">{{task.date}}</div>
+                <div class = "task-attribute">{{task.category}}</div>
+
+                <form action="/delete" method="POST">
+                    <input type="hidden" name="deleteid" value="{{task.id}}">
+                    <input type="submit" value="Delete task" class="delete-button">
+                </form>
+
+
+                <form action="/update" id = "updateForm">
+                    <input type="text" name="description" value="{{task.description}}">
+                    <input type="date" name="date" value="{{task.date}}">
+                    <input type="text" name="category" value="{{task.category}}">
+                    <input type="hidden" name="updateid" value="{{task.id}}">
+                    <input type="submit" value="Update task" class="update-button">
+                </form>
+            </div>
+        {%endfor%}
+    </div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+body{
+    font-family: Arial, sans-serif;
+}
+
+.login-button{
+    margin:auto;
+    position: absolute;
+    background-color: green;
+    align-self: center;
+    height: 30px;
+    width: 100px;
+   
+}
+.task-row{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+.task-matrix{
+    margin-top: 20px;
+}
