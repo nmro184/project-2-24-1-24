@@ -9,9 +9,7 @@
 </head>
 <body>
     <div class ="head">
-        <form action="/search" method="POST">
-            <input type="text" name = "search" placeholder="search tasks">
-        </form>
+        <input type="text" name="search" id="searchInput" placeholder="Search" oninput="searchTasks()">
 
         <form action="/update" id = "updateForm">
             <input type="text" name="description" placeholder="">
@@ -28,12 +26,12 @@
             <input type="submit">
         </form>
     </div>
-    <div class = "task-matrix">
+    <div class = "task-matrix" id="taskMatrix">
         {% for task in tasks %}
             <div class="task-row">
-                <div class = "task-attribute">{{task.description}}</div>
-                <div class = "task-attribute">{{task.date}}</div>
-                <div class = "task-attribute">{{task.category}}</div>
+                <div class = "task-attribute" id="taskDescription">{{task.description}}</div>
+                <div class = "task-attribute" id ="taskDate">{{task.date}}</div>
+                <div class = "task-attribute" id ="taskCategory">{{task.category}}</div>
 
                 <form action="/delete" method="POST">
                     <input type="hidden" name="deleteid" value="{{task.id}}">
@@ -54,6 +52,18 @@
                 updateForm.style.display ="none";
             }
         }
+        function searchTasks() {
+            var searchInput = document.getElementById("searchInput").value.toLowerCase(); // Convert to lowercase
+            var taskRows = document.getElementById("taskMatrix").getElementsByClassName('task-row');
+        
+            for (var i = 0; i < taskRows.length; i++) {
+                var taskDescription = taskRows[i].querySelector("#taskDescription").textContent.toLowerCase(); // Convert to lowercase
+        
+                // If the task description contains the search input, show the task; otherwise, hide it
+                taskRows[i].style.visibility = taskDescription.includes(searchInput) ? 'visible' : 'hidden';
+            }
+        }
+        
     </script>
 </body>
 </html>
