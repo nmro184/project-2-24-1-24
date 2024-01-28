@@ -1,5 +1,5 @@
 from flask import Flask , render_template , request
-from db import new_task, get_tasks , delete_task
+from db import new_task, get_tasks , delete_task , search_tasks
 app = Flask(__name__)
 
 @app.route('/')
@@ -17,7 +17,7 @@ def create():
 
 @app.route('/search' ,methods = ['POST'])
 def search():
-    return render_template("home.html", tasks = get_tasks(request.form['search']))
+    return render_template("home.html", tasks = search_tasks(request.form['search']))
 
 @app.route('/delete' , methods = ['POST' , 'GET'])
 def delete():

@@ -15,8 +15,8 @@ def get_tasks():
     task_tuple_list = query("SELECT * FROM tasks ")
     return [Task(task) for task in task_tuple_list]
 
-def get_tasks(text):
-    task_tuple_list = query("SELECT * FROM tasks WHERE description str")
+def search_tasks(text):
+    task_tuple_list = query(f"SELECT * FROM tasks WHERE description LIKE '{text}%'")
     return [Task(task) for task in task_tuple_list]
 
 def delete_task(id):

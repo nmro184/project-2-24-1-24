@@ -4,7 +4,6 @@ body{
 
 .login-button{
     margin:auto;
-    position: absolute;
     background-color: green;
     align-self: center;
     height: 30px;
@@ -18,4 +17,18 @@ body{
 }
 .task-matrix{
     margin-top: 20px;
+}
+.head{
+    display: flex;
+    justify-content: left;
+    gap: 100px;
+}
+
+.login-form{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    margin-top: 25%;
+    margin-left: 45%;
+    justify-content: center;
 }

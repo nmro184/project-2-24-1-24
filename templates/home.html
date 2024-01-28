@@ -7,22 +7,18 @@
     <link rel="stylesheet" href="/static/style.css">
     <title>Document</title>
 </head>
-<script>
-    document.getElementById("updateForm").style.display = "none";
-    function toggleupdateForm(){
-        var updateForm = document.getElementById("update.form");
-        if (updateForm.style.display == "none"){
-            updateForm.style.display == "block";
-        }
-        else{
-            updateForm.style.display ="none";
-        }
-    }
-</script>
 <body>
-    <div>
+    <div class ="head">
         <form action="/search" method="POST">
             <input type="text" name = "search" placeholder="search tasks">
+        </form>
+
+        <form action="/update" id = "updateForm">
+            <input type="text" name="description" placeholder="">
+            <input type="date" name="date" placeholder="">
+            <input type="text" name="category" placeholder="">
+            <input type="hidden" name="updateid" placeholder="">
+            <input type="submit" value="Update task" class="update-button">
         </form>
 
         <form action="/create" class="create" id="createform">
@@ -43,17 +39,21 @@
                     <input type="hidden" name="deleteid" value="{{task.id}}">
                     <input type="submit" value="Delete task" class="delete-button">
                 </form>
-
-
-                <form action="/update" id = "updateForm">
-                    <input type="text" name="description" value="{{task.description}}">
-                    <input type="date" name="date" value="{{task.date}}">
-                    <input type="text" name="category" value="{{task.category}}">
-                    <input type="hidden" name="updateid" value="{{task.id}}">
-                    <input type="submit" value="Update task" class="update-button">
-                </form>
+                <button onclick="toggleupdateForm()"> update</button>
             </div>
         {%endfor%}
     </div>
+    <script>
+        document.getElementById("updateForm").style.display = "none";
+        function toggleupdateForm(){
+            var updateForm = document.getElementById("updateForm");
+            if (updateForm.style.display == "none"){
+                updateForm.style.display = "block";
+            }
+            else{
+                updateForm.style.display ="none";
+            }
+        }
+    </script>
 </body>
 </html>

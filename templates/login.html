@@ -8,8 +8,15 @@
     <title>login</title>
 </head>
 <body>
-    <form action="/home"> 
-        <input type="submit" value = "login" class="login">   
+    <form action="/home" class="login-form" id="loginForm"> 
+        <input type="text" placeholder="username">
+        <input type="text" placeholder="password">
+       <button  class="login-button" onclick="validate()">login </button>   
     </form>
 </body>
+<script>
+    function validate(){
+        document.getElementById(loginForm).submit()
+    }
+</script>
 </html>
