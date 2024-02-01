@@ -1,12 +1,12 @@
 from flask import Flask , render_template , request
-from db import new_task, get_tasks , delete_task , search_tasks
+from db import new_task, get_tasks , delete_task
 app = Flask(__name__)
 
 @app.route('/')
 def login():
     return render_template("login.html")
 
-@app.route('/home')
+@app.route('/home' , methods = ['POST' , 'GET'])
 def home():
     return render_template("home.html" , tasks = get_tasks())
 
