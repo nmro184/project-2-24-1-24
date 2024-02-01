@@ -9,14 +9,16 @@
 </head>
 <body>
     <form action="/home" class="login-form" id="loginForm" method="POST"> 
-        <input type="text" placeholder="username">
-        <input type="text" placeholder="password">
+        <input name = "username" type="text" placeholder="username">
+        <input name = "password" type="text" placeholder="password">
        <button  class="login-button" onclick="validate()">login </button>   
     </form>
 </body>
 <script>
-    function validate(){
-        document.getElementById(loginForm).submit()
+    function validate() {
+        var username = document.getElementById("loginForm").elements["username"].value;
+        document.getElementById("loginForm").action = "/home/" + username;
+        document.getElementById("loginForm").submit();
     }
 </script>
 </html>

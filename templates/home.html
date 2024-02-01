@@ -11,19 +11,18 @@
     <div class ="head">
         <input type="text" name="search" id="searchInput" placeholder="Search" oninput="searchTasks()">
 
-        <form action="/update" id = "updateForm">
+        <form action="/update" id = "updateForm" method="POST">
             <input type="text" name="description" placeholder="">
             <input type="date" name="date" placeholder="">
             <input type="text" name="category" placeholder="">
-            <input type="hidden" name="updateid" placeholder="">
             <input type="submit" value="Update task" class="update-button">
         </form>
 
-        <form action="/create" class="create" id="createform">
+        <form action="/create/{{username}}" class="create" id="createform" method="POST">
             <input type="text" name="description" placeholder="task description">
             <input type="date" name="date" placeholder="date">
             <input type="text" name="category" placeholder="category">
-            <input type="submit">
+            <input type="submit" class ="create-button" value = "create task">
         </form>
     </div>
     <div class = "task-matrix" id="taskMatrix">
@@ -33,20 +32,26 @@
                 <div class = "task-attribute" id ="taskDate">{{task.date}}</div>
                 <div class = "task-attribute" id ="taskCategory">{{task.category}}</div>
 
-                <form action="/delete" method="POST">
+                <form action="/delete/{{username}}" method="POST">
                     <input type="hidden" name="deleteid" value="{{task.id}}">
                     <input type="submit" value="Delete task" class="delete-button">
                 </form>
-                <button onclick="toggleupdateForm()"> update</button>
+                <button onclick="toggleupdateForm('{{username}}' , {{task.id}})"> update</button>
             </div>
         {%endfor%}
     </div>
     <script>
         document.getElementById("updateForm").style.display = "none";
-        function toggleupdateForm(){
+        function toggleupdateForm(username , id){
             var updateForm = document.getElementById("updateForm");
             if (updateForm.style.display == "none"){
                 updateForm.style.display = "block";
+                updateForm.action = "/update/" + username;
+                var newInput = document.createElement('input')
+                newInput.type = "hidden"
+                newInput.name ="updateid"
+                newInput.value = id
+                updateForm.appendChild(newInput);
             }
             else{
                 updateForm.style.display ="none";
