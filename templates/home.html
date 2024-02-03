@@ -52,6 +52,15 @@
                 newInput.name ="updateid"
                 newInput.value = id
                 updateForm.appendChild(newInput);
+                event.preventDefault();
+                fetch(`/api/task/${id}`)
+                    .then(response => response.json())
+                    .then (task => {
+                        updateForm.elements['description'].value = task.description;
+                        updateForm.elements['date'].value = task.date;
+                        updateForm.elements['category'].value = task.category;
+                    })
+                    .catch(error => console.error('Error fetching task details:', error));     
             }
             else{
                 updateForm.style.display ="none";

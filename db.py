@@ -27,3 +27,8 @@ def delete_task(id , username):
 def update_task(new_description , new_date , new_category  , updateid , username):
     data = (new_description , new_date, new_category, updateid , username )
     query("UPDATE tasks SET description = ?, date = ?, category = ? WHERE id = ? AND username = ?" , data)
+
+def get_task(id):
+    task_tuple = query(f"SELECT * from tasks WHERE id = {id}")
+    return Task(task_tuple[0])
+
