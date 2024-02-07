@@ -1,5 +1,5 @@
 from flask import Flask , render_template , request , session , redirect , jsonify
-from db import new_task, get_tasks , delete_task , update_task , get_task
+from db import new_task, get_tasks , delete_task , update_task , get_task , get_users
 app = Flask(__name__)
 
 app.secret_key = "kjdbkjsdbkjjsldjdsbn"
@@ -9,10 +9,16 @@ def login():
 
 @app.route('/home/<username>' , methods = ['POST' , 'GET'])
 def home(username):
-    get_task(2)
-    if username not in session:
-        session[username] = username
-    return render_template("home.html" , tasks = get_tasks(username) , username = username)
+    if username in session:
+        if request.method == 'GET':
+            return render_template("home.html" , tasks = get_tasks(username) , username = username , users =  get_users())
+        if session[username] == request.form['password']:
+            return render_template("home.html" , tasks = get_tasks(username) , username = username , users = get_users())
+        else:
+            return render_template("login.html" , message = "wrong password")
+    else:
+        session[username] = request.form['password']
+        return render_template("home.html" , tasks = get_tasks(username) , username = username , users = get_users())
 
 @app.route('/create/<username>' , methods = ['POST' , 'GET'])
 def create(username):
@@ -33,3 +39,10 @@ def update(username):
 def get_task_api(task_id):
     task = get_task(task_id)
     return jsonify(task.to_dict())
+
+@app.route('/share/<task_id>/<username>')
+def share_task(task_id , username):
+    task = get_task(task_id)
+    task.username = username
+    new_task(task.description , task.date , task.category , task.username)
+    return ""

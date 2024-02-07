@@ -8,6 +8,10 @@
     <title>Document</title>
 </head>
 <body>
+    <header> 
+        <div class="welcome">welcome! {{username}} </div>
+        <a class="logout-button" href="/"> log out</a>
+    </header>
     <div class ="head">
         <input type="text" name="search" id="searchInput" placeholder="Search" oninput="searchTasks()">
 
@@ -37,6 +41,12 @@
                     <input type="submit" value="Delete task" class="delete-button">
                 </form>
                 <button onclick="toggleupdateForm('{{username}}' , {{task.id}})"> update</button>
+                <select name="share" id="share{{task.id}}" class = "share">
+                    {% for user in users%}
+                        <option value="{{user}}">{{user}}</option>
+                    {% endfor %}
+                </select class = "select">
+                <button onclick="shareTask('{{username}}' , {{task.id}} , (this))"> share</button>
             </div>
         {%endfor%}
     </div>
@@ -67,16 +77,44 @@
             }
         }
         function searchTasks() {
-            var searchInput = document.getElementById("searchInput").value.toLowerCase(); // Convert to lowercase
+            var searchInput = document.getElementById("searchInput").value.toLowerCase(); 
             var taskRows = document.getElementById("taskMatrix").getElementsByClassName('task-row');
         
             for (var i = 0; i < taskRows.length; i++) {
-                var taskDescription = taskRows[i].querySelector("#taskDescription").textContent.toLowerCase(); // Convert to lowercase
-        
-                // If the task description contains the search input, show the task; otherwise, hide it
+                var taskDescription = taskRows[i].querySelector("#taskDescription").textContent.toLowerCase(); 
                 taskRows[i].style.visibility = taskDescription.includes(searchInput) ? 'visible' : 'hidden';
             }
+
         }
+        
+        function shareTask(username , task_id , button){
+            var share = document.getElementById('share' + task_id);
+            button.disabled = true;
+            fetch(`/share/${task_id}/${share.value}`)
+            .then (response => {
+                if (response.ok){
+                    button.textContent = 'task shared !'
+                    button.style.backgroundColor = "green";
+                }
+                else {
+                    throw new Error('Failed to share task');
+                }
+                enableShareButton(button);
+                return response.text();
+            })
+            .catch(error => console.error('Error sharing task:', error));
+            enableShareButton(button);     
+    }
+    function enableShareButton(button) {
+        setTimeout(() => {
+            button.textContent = "Share";
+            button.disabled = false;
+            button.style.backgroundColor = "";
+        }, 3000); 
+    }
+            
+            
+        
         
     </script>
 </body>

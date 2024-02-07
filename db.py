@@ -32,3 +32,11 @@ def get_task(id):
     task_tuple = query(f"SELECT * from tasks WHERE id = {id}")
     return Task(task_tuple[0])
 
+def get_users():
+    users_list = []
+    users_tuple_list = query("SELECT username from tasks")
+    for user in users_tuple_list:
+        if user[0] not in users_list:
+            users_list.append(user[0])
+    return users_list
+

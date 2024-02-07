@@ -7,7 +7,25 @@
     width: 100px;
    
 }
+header {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px; 
+}
 
+.logout-button{
+    background-color: rgb(255, 0, 0);
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+.welcome{
+    margin-right: auto;
+}
 .login-form{
     width: fit-content;
     display: flex;
@@ -48,7 +66,7 @@ body {
     border-radius: 15px;
     margin-bottom: 10px;
     padding: 10px;
-    width: 400px;
+    width: 500px;
     display: flex;
     justify-content: space-between;
 }
